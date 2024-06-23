@@ -7,14 +7,11 @@ use mysqli;
 
 class Database implements DatabaseInterface
 {
-    protected mysqli $mysqli;
 
     public function __construct(
-        mysqli $mysqli
+        protected readonly mysqli $mysqli
     )
-    {
-        $this->mysqli = $mysqli;
-    }
+    {}
 
     /**
      *
@@ -194,7 +191,7 @@ class Database implements DatabaseInterface
                  */
                 $closingBracePos = strpos($query, '}', $i);
 
-                if ($closingBracePos === false) {
+                if (!str_contains($query, '}')) {
                     throw new Exception('Unmatched { in query.');
                 }
 
